@@ -1,0 +1,52 @@
+yelp13res :
+NARRE(review,bias): 3: loss_valid 20.1075, rmse_valid 1.12073, mae_valid 0.874065
+NARRE(bias): 2: loss_valid 19.3533, rmse_valid 1.09995, mae_valid 0.869172
+NARRE(review fully-connected):loss_valid  , rmse_valid  , mae_valid
+
+NARRE(review): 1: loss_valid 148.7, rmse_valid 3.04864, mae_valid 2.70865
+NARRE(aspect+polarity相似度): 1: loss_valid 136.294, rmse_valid 2.91863, mae_valid 2.49747
+
+NARRE(aspect+polarity相似度,bias):user preference item preference concat 2 fully_connected 得到 aspect score
+                                3:loss_valid 19.3944, rmse_valid 1.1011, mae_valid 0.872397
+NARRE(user aspect对比item polarity相似度,bias):user aspect item polarity concat 2 fully_connected 得到 aspect score
+                                3:loss_valid 19.3831, rmse_valid 1.10078, mae_valid 0.872406
+
+NARRE(aspect+polarity相似度,review,bias):
+u_preference&i_preference fully_connected review score fully_connected add bias---loss_valid 20.329, rmse_valid 1.127, mae_valid 0.891604
+u_preference&i_preference fully_connected review score bias add---loss_valid 20.0129, rmse_valid 1.11795, mae_valid 0.874815
+u_preference&i_preference review concat multiply add bias---loss_valid 23.482, rmse_valid 1.143003, mae_valid 0.902173
+u_preference&i_preference review concat fully_connected add bias---loss_valid 19.383, rmse_valid 1.10077, mae_valid 0.872455
+NARRE(user aspect对比item polarity相似度,review,bias):
+u_aspect&i_polarity fully_connected review score fully_connected add bias---3:loss_valid 19.3987, rmse_valid 1.10057, mae_valid 0.86949
+u_aspect&i_polarity fully_connected review score bias add---2:loss_valid 20.1708, rmse_valid 1.12248, mae_valid 0.887655
+u_aspect&i_polarity review concat multiply add bias---loss_valid 21.7251, rmse_valid 1.1227071, mae_valid 0.885802
+u_aspect&i_polarity review concat fully_connected add bias---loss_valid 19.3599, rmse_valid 1.09996, mae_valid 0.868702
+
+NARRE_auxiliary(review,bias):loss_valid 2634.39, rmse_valid 1.11758, mae_valid 0.872172
+NARRE_auxiliary(aspect+polarity相似度,review,bias):
+u_preference&i_preference review concat fully_connected add bias(aspect auxiliary task)---loss_valid 2576.81, rmse_valid 1.1004, mae_valid 0.875517
+u_preference&i_preference concat review attention fully_connected add bias (aspect auixilary loss)---loss_valid 2574.7, rmse_valid 1.09371, mae_valid 0.846301
+u_preference&i_preference score add review score add bias(aspect auxiliary task)---rmse_valid 1.1011 mae_valid 0.87048
+NARRE_auxiliary(ser aspect对比item polarity相似度,review,bias):
+u_aspect&i_polarity review concat fully_connected add bias(aspect auxiliary task)---loss_valid 2750.47, rmse_valid 1.09984, mae_valid 0.868463
+u_aspect&i_polarity logits review concat fully_connected add bias(aspect auxiliary task)---loss_valid 2576.77, rmse_valid 1.13906, mae_valid 0.87231
+u_aspect&i_polarity concat review attention fully_connected add bias(aspect auxiliary task)---rmse_valid 1.1205608500642179  mae_valid
+0.87212874487118608
+u_aspect&i_polarity score add review score add bias(aspect auxiliary task)---
+
+DeepCoNN: 3: loss_valid 21.4037, rmse_valid 1.15671, mae_valid 0.904928
+DeepCoNN++: 2:loss_valid 19.8555, rmse_valid 1.11412, mae_valid 0.874276
+                    4:loss_valid 20.645, rmse_valid 1.13608, mae_valid 0.869132
+
+
+{"polarity": [1, 1, 2, 0, 1], "votes": {"funny": 1, "useful": 4, "cool": 2}, "user_id": "RRTraCQw77EU4yZh0BBTag", "review_id": "B5h25WK28rJjx4KHm4gr7g", "text": "Not that my review will mean much given the more in-depth reviewers but I will chime in nonetheless...\n\nI can really only review one dish, the #3 lunch special, Yellow Curry Chicken. I don't know what the authentic name for it is, Kang Karee something or other. It's so tasty that the first time I had it I knew I'd never branch out. Good lunch spot if you work around downtown. Not the quickest service all the time and can get busy during lunch, but always consistently good. Fairly dim inside, a good place to forget about the sun on a summer day.", "aspect": [1, 2, 3, 0, 1], "business_id": "wct7rZKyZqZftzmAU-vhWQ", "stars": 4, "date": "2008-03-21", "type": "review"}
+
+
+        service food miscellaneous price ambience
+aspect  1       1    0             1     1
+polarity1       1    0             1     1
+
+user_a  6       32   20            4     6
+user_p  4       24   12            0     2
+item_a  108     321  262           23    43
+item_p  -14     171  68            4     16
